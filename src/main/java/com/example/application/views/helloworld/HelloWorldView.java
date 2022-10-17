@@ -1,6 +1,7 @@
 package com.example.application.views.helloworld;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,8 +25,10 @@ import com.vaadin.ui.Label;
 public class HelloWorldView extends HorizontalLayout {
 
     public HelloWorldView() {
-        List<Version> versions = Arrays.asList(
-                new Version("Spring Framework", SpringVersion.getVersion()),
+        List<Version> versions = new ArrayList<>();
+        versions.add(
+                new Version("Spring Framework", SpringVersion.getVersion()));
+        versions.add(
                 new Version("Spring Boot", SpringBootVersion.getVersion()));
 
         Grid<Version> grid = new Grid<>();
@@ -39,10 +42,15 @@ public class HelloWorldView extends HorizontalLayout {
 
         verticalLayout.add(legacyWrapper1);
 
-        Label legacy_component = new Label("V8 Legacy Component");
-        LegacyWrapper legacyWrapper = new LegacyWrapper(legacy_component);
+        Button flow_button = new Button("Flow button", click -> {
+            Version version = new Version("My Product", "My version");
+            versions.add(version);
+            grid.setItems(versions);
+        });
 
-        Button flow_button = new Button("Flow button");
+        com.vaadin.ui.Button disable_flow_button = new com.vaadin.ui.Button(
+                "Disable flow button", click -> flow_button.setEnabled(!flow_button.isEnabled()));
+        LegacyWrapper legacyWrapper = new LegacyWrapper(disable_flow_button);
 
         verticalLayout.add(legacyWrapper, flow_button);
         add(verticalLayout);

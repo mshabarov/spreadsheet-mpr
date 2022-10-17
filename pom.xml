@@ -119,72 +119,32 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-compatibility-client</artifactId>
             <version>${vaadin8.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin.external.atmosphere</groupId>
-                    <artifactId>atmosphere-runtime</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-compatibility-shared</artifactId>
             <version>${vaadin8.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin.external.atmosphere</groupId>
-                    <artifactId>atmosphere-runtime</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server-mpr</artifactId>
             <version>${vaadin8.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin.external.atmosphere</groupId>
-                    <artifactId>atmosphere-runtime</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-compatibility-server-mpr</artifactId>
             <version>${vaadin8.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin.external.atmosphere</groupId>
-                    <artifactId>atmosphere-runtime</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.vaadin</groupId>-->
-<!--            <artifactId>vaadin-push</artifactId>-->
-<!--            <version>${vaadin8.version}</version>-->
-<!--        </dependency>-->
+
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiled</artifactId>
             <version>${vaadin8.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin.external.atmosphere</groupId>
-                    <artifactId>atmosphere-runtime</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-themes</artifactId>
             <version>${vaadin8.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin.external.atmosphere</groupId>
-                    <artifactId>atmosphere-runtime</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
