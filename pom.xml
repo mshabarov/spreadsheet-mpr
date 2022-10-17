@@ -10,22 +10,27 @@
     <packaging>jar</packaging>
 
     <properties>
-        <vaadin8.version>8.14.3</vaadin8.version>
+        <vaadin8.version>8.17-SNAPSHOT</vaadin8.version>
         <spreadsheet.version>2.1.1</spreadsheet.version>
-        <java.version>11</java.version>
-        <vaadin.version>23.1.1</vaadin.version>
-        <flow.version>23.1.1</flow.version>
+        <java.version>17</java.version>
+        <vaadin.version>24.0-SNAPSHOT</vaadin.version>
+        <flow.version>24.0-SNAPSHOT</flow.version>
         <selenium.version>4.1.2</selenium.version>
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.0</version>
+        <version>3.0.0-M4</version>
     </parent>
 
     <repositories>
         <!-- The order of definitions matters. Explicitly defining central here to make sure it has the highest priority. -->
+
+        <repository>
+            <id>spring milestones</id>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
 
         <!-- Main Maven repository -->
         <repository>
@@ -35,6 +40,8 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
+
         <repository>
             <id>vaadin-prereleases</id>
             <url>
@@ -72,6 +79,11 @@
                 https://maven.vaadin.com/vaadin-prereleases/
             </url>
         </pluginRepository>
+
+        <pluginRepository>
+            <id>spring milestones</id>
+            <url>https://repo.spring.io/milestone</url>
+        </pluginRepository>
     </pluginRepositories>
 
     <dependencyManagement>
@@ -105,46 +117,86 @@
 
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-compatibility-server</artifactId>
-            <version>${vaadin8.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
             <artifactId>vaadin-compatibility-client</artifactId>
             <version>${vaadin8.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.atmosphere</groupId>
+                    <artifactId>atmosphere-runtime</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-compatibility-shared</artifactId>
             <version>${vaadin8.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.atmosphere</groupId>
+                    <artifactId>atmosphere-runtime</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-server</artifactId>
+            <artifactId>vaadin-server-mpr</artifactId>
             <version>${vaadin8.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.atmosphere</groupId>
+                    <artifactId>atmosphere-runtime</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-push</artifactId>
+            <artifactId>vaadin-compatibility-server-mpr</artifactId>
             <version>${vaadin8.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.atmosphere</groupId>
+                    <artifactId>atmosphere-runtime</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.vaadin</groupId>-->
+<!--            <artifactId>vaadin-push</artifactId>-->
+<!--            <version>${vaadin8.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiled</artifactId>
             <version>${vaadin8.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.atmosphere</groupId>
+                    <artifactId>atmosphere-runtime</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-themes</artifactId>
             <version>${vaadin8.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.atmosphere</groupId>
+                    <artifactId>atmosphere-runtime</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-
-
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-ordered-layout-flow</artifactId>
+            <version>${vaadin.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>mpr-v8</artifactId>
+            <version>7.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
