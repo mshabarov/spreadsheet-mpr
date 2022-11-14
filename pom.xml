@@ -10,9 +10,8 @@
     <packaging>jar</packaging>
 
     <properties>
-        <vaadin8.version>8.17-SNAPSHOT</vaadin8.version>
-        <spreadsheet.version>2.1.1</spreadsheet.version>
-        <java.version>17</java.version>
+        <vaadin7.version>7.7-SNAPSHOT</vaadin7.version>
+        <java.version>1.8</java.version>
         <vaadin.version>24.0-SNAPSHOT</vaadin.version>
         <flow.version>24.0.0.alpha4</flow.version>
         <selenium.version>4.1.2</selenium.version>
@@ -110,12 +109,6 @@
             <groupId>com.vaadin</groupId>
             <!-- Replace artifactId with vaadin-core to use only free components -->
             <artifactId>vaadin</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin</groupId>
-                    <artifactId>vaadin-spreadsheet-flow</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -124,34 +117,62 @@
 
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-compatibility-client</artifactId>
-            <version>${vaadin8.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-compatibility-shared</artifactId>
-            <version>${vaadin8.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-server-mpr</artifactId>
-            <version>${vaadin8.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-compatibility-server-mpr</artifactId>
-            <version>${vaadin8.version}</version>
+            <artifactId>vaadin-server</artifactId>
+            <version>${vaadin7.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jsoup</groupId>
+                    <artifactId>jsoup</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.gwt</groupId>
+                    <artifactId>gwt-elemental</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiled</artifactId>
-            <version>${vaadin8.version}</version>
+            <artifactId>vaadin-client</artifactId>
+            <version>${vaadin7.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.gwt</groupId>
+                    <artifactId>gwt-dev</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.gwt</groupId>
+                    <artifactId>gwt-elemental</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client-compiler</artifactId>
+            <version>${vaadin7.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.gwt</groupId>
+                    <artifactId>gwt-dev</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.gwt</groupId>
+                    <artifactId>gwt-user</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.gwt</groupId>
+                    <artifactId>gwt-elemental</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-themes</artifactId>
-            <version>${vaadin8.version}</version>
+            <version>${vaadin7.version}</version>
         </dependency>
 
         <dependency>
@@ -162,18 +183,8 @@
 
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>mpr-v8</artifactId>
+            <artifactId>mpr-v7</artifactId>
             <version>7.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-spreadsheet</artifactId>
-            <version>${spreadsheet.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-spreadsheet-charts</artifactId>
-            <version>${spreadsheet.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -212,6 +223,12 @@
             <version>5.1.1</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-elemental</artifactId>
+            <version>2.8.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -243,13 +260,14 @@
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
-                <version>${vaadin8.version}</version>
+                <version>${vaadin7.version}</version>
                 <executions>
                     <execution>
                         <goals>
+                            <goal>resources</goal>
                             <goal>update-theme</goal>
                             <goal>update-widgetset</goal>
-                            <goal>compile</goal>
+<!--                            <goal>compile</goal>-->
                             <!-- Comment out compile-theme goal to use on-the-fly theme compilation -->
                             <goal>compile-theme</goal>
                         </goals>
@@ -271,6 +289,24 @@
                     <execution>
                         <goals>
                             <goal>prepare-frontend</goal>
+                            <goal>build-frontend</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>2.8.2</version>
+                <configuration>
+                    <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+                    <webappDirectory>${basedir}/target/classes/VAADIN/widgetsets</webappDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
                         </goals>
                     </execution>
                 </executions>
