@@ -14,7 +14,7 @@
         <spreadsheet.version>2.1.1</spreadsheet.version>
         <java.version>17</java.version>
         <vaadin.version>24.0-SNAPSHOT</vaadin.version>
-        <flow.version>24.0-SNAPSHOT</flow.version>
+        <flow.version>24.0.0.alpha4</flow.version>
         <selenium.version>4.1.2</selenium.version>
     </properties>
 
@@ -88,6 +88,13 @@
 
     <dependencyManagement>
         <dependencies>
+<!--            <dependency>-->
+<!--                <groupId>com.vaadin</groupId>-->
+<!--                <artifactId>flow-bom</artifactId>-->
+<!--                <version>${flow.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-bom</artifactId>

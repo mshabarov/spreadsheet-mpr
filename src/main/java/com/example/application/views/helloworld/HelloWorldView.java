@@ -20,8 +20,8 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
 
 @PageTitle("Hello World")
-@Route(value = "hello", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
+@Route(value = "hello")
+@RouteAlias(value = "")
 public class HelloWorldView extends HorizontalLayout {
 
     public HelloWorldView() {
@@ -36,24 +36,37 @@ public class HelloWorldView extends HorizontalLayout {
         grid.addColumn(Version::getProduct).setCaption("Product");
         grid.addColumn(Version::getVersion).setCaption("Version");
 
-        LegacyWrapper legacyWrapper1 = new LegacyWrapper(grid);
+        LegacyWrapper legacyWrapper = new LegacyWrapper(grid);
 
-        VerticalLayout verticalLayout = new VerticalLayout();
+        VerticalLayout legacy = new VerticalLayout();
 
-        verticalLayout.add(legacyWrapper1);
+        legacy.add(legacyWrapper);
 
-        Button flow_button = new Button("Flow button", click -> {
-            Version version = new Version("My Product", "My version");
+//        com.vaadin.flow.component.grid.Grid<Version> flowGrid = new com.vaadin.flow.component.grid.Grid<>();
+//        flowGrid.setItems(versions);
+//        flowGrid.addColumn(Version::getProduct).setHeader("Product");
+//        flowGrid.addColumn(Version::getVersion).setHeader("Version");
+
+
+        Button flowButton = new Button("Add product (Flow)", click -> {
+            Version version = new Version("New Product", "1.0.0");
             versions.add(version);
             grid.setItems(versions);
         });
 
-        com.vaadin.ui.Button disable_flow_button = new com.vaadin.ui.Button(
-                "Disable flow button", click -> flow_button.setEnabled(!flow_button.isEnabled()));
-        LegacyWrapper legacyWrapper = new LegacyWrapper(disable_flow_button);
+        legacy.add(flowButton);
 
-        verticalLayout.add(legacyWrapper, flow_button);
-        add(verticalLayout);
+//        com.vaadin.ui.Button legacyButton = new com.vaadin.ui.Button(
+//                "Add product (Vaadin 8)", click -> flowButton.setEnabled(!flowButton.isEnabled()));
+
+//        LegacyWrapper legacyButtonWrapper = new LegacyWrapper(legacyButton);
+//        legacy.add(legacyButtonWrapper);
+
+//        VerticalLayout verticalLayout = new VerticalLayout();
+//        verticalLayout.add(flowGrid, flowButton);
+//        verticalLayout.add(flowButton);
+
+        add(legacy);
     }
 
     public static class Version implements Serializable {
